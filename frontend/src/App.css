@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Borel&display=swap');
+
+body{
+    overflow: hidden;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

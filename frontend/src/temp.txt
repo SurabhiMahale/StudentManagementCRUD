@@ -1,0 +1,154 @@
+{searchQuery != "" &&
+            searchResults.map((data) => {
+              return (
+                <div
+                className="flex justify-between p-5 m-5 shadow-lg rounded-lg bg-slate-100"
+                key={data._id}
+              >
+                {editMode == data._id ? (
+                  <div>
+                    <form onSubmit={handleEdit}>
+                      <div className="flex gap-2 items-center my-1">
+                        Name:
+                        <div>
+                          <input
+                            type="text"
+                            name={`${data._id}_name`}
+                            id={`${data._id}_name`}
+                            required
+                            placeholder={data.name}
+                            value={data.name}
+                            onChange={(e) => {
+                              const dt = [...students];
+                              dt[index].name = e.target.value;
+                              setStudents(() => dt);
+                            }}
+                            className="rounded-full bg-gray-100 px-2 w-full outline-none font-mono "
+                          />
+                        </div>
+                      </div>
+                      <div className="flex gap-2 items-center my-1">
+                        Email:{" "}
+                        <div>
+                          <input
+                            type="email"
+                            name={`${data._id}_email`}
+                            id={`${data._id}_email`}
+                            // required
+                            placeholder={data.email}
+                            value={data.email}
+                            onChange={(e) => {
+                              const dt = [...students];
+                              dt[index].email = e.target.value;
+                              setStudents(() => dt);
+                            }}
+                            className="rounded-full bg-gray-100 px-2 w-full outline-none font-mono "
+                          />
+                        </div>
+                      </div>
+                      <div className="flex gap-2 items-center my-1">
+                        Phone:
+                        <div>
+                          <input
+                            type="number"
+                            name={`${data._id}_phone`}
+                            id={`${data._id}_phone`}
+                            required
+                            placeholder={data.phone}
+                            value={data.phone}
+                            minLength={10}
+                            maxLength={10}
+                            onChange={(e) => {
+                              const dt = [...students];
+                              dt[index].phone = e.target.value;
+                              setStudents(() => dt);
+                            }}
+                            className="rounded-full bg-gray-100 px-2 w-full outline-none font-mono "
+                          />
+                        </div>
+                      </div>
+                      <div className="flex gap-2 items-center my-1">
+                        Age:
+                        <div>
+                          <input
+                            type="number"
+                            name={`${data._id}_age`}
+                            id={`${data._id}_age`}
+                            required
+                            placeholder={data.age}
+                            value={data.age}
+                            onChange={(e) => {
+                              const dt = [...students];
+                              dt[index].age = e.target.value;
+                              setStudents(() => dt);
+                            }}
+                            className="rounded-full bg-gray-100 px-2 w-full outline-none font-mono "
+                          />
+                        </div>
+                      </div>
+
+                      <button type="submit">Save</button>
+                    </form>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="flex gap-2 items-center my-1">
+                      Name:
+                      <div>
+                        <div>{data.name}</div>
+                      </div>
+                    </div>
+                    <div className="flex gap-2 items-center my-1">
+                      Email:{" "}
+                      <div className="rounded-full bg-gray-400 px-2 font-mono ">
+                        {data.email}
+                      </div>
+                      <div
+                        onClick={() => {
+                          copy(
+                            `${import.meta.env.VITE_FRONTEND_URL}/s/${
+                              data.short_url_code
+                            }`
+                          );
+                          toast("Copied to clipboard!");
+                        }}
+                        className="cursor-pointer"
+                      >
+                        {/* <FaCopy size={12} /> */}
+                      </div>
+                    </div>
+                    <div className="flex gap-2 items-center my-1">
+                      Phone:
+                      <div>
+                        <div>{data.phone}</div>
+                      </div>
+                    </div>
+                    <div className="flex gap-2 items-center my-1">
+                      Age:
+                      <div>
+                        <div>{data.age}</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex flex-col gap-1 items-center">
+                  <div
+                    onClick={() => {
+                      setEditMode(data._id);
+                      setEditStudent(index);
+                    }}
+                    className="cursor-pointer"
+                  >
+                    <FiEdit size={15} />
+                  </div>
+                  <div
+                    onClick={() => handleDelete(data._id)}
+                    className="cursor-pointer "
+                  >
+                    <MdDelete />
+                  </div>
+                </div>
+              </div>
+              );
+            })}
