@@ -7,7 +7,7 @@ router
   .route("/")
   .post(async (req, res) => {
     try {
-      const { name, email, phone, age } = req.body;
+      const { name, email, phone, age, address, college } = req.body;
 
       await Student.create({
         name,
@@ -15,6 +15,7 @@ router
         phone,
         age,
         address,
+        college, // Assuming 'college' is the ID of the associated college
       });
 
       res.status(200).send({
@@ -29,7 +30,8 @@ router
   })
   .get(async (req, res) => {
     try {
-      const students = await Student.find({});
+      const students = await Student.find().populate("college"); // Populate 'college' field with 'collegeName'
+
       res.status(200).send(students);
     } catch (e) {
       console.log("Error : ", e);
@@ -39,7 +41,7 @@ router
     }
   })
   .put(async (req, res) => {
-    const { name, email, age, phone , address} = req.body;
+    const { name, email, age, phone, address, college } = req.body;
     try {
       const { id } = req.query;
       const student = await Student.findOne({
@@ -47,31 +49,21 @@ router
       });
       if (name) {
         student.name = name;
-      } else {
-        student.name = undefined;
       }
       if (address) {
         student.address = address;
-      } else {
-        student.address = undefined;
       }
-
-
       if (email) {
         student.email = email;
-      } else {
-        student.email = undefined;
       }
       if (age) {
         student.age = age;
-      } else {
-        student.age = undefined;
       }
-
       if (phone) {
         student.phone = phone;
-      } else {
-        student.phone = phone;
+      }
+      if (college) {
+        student.college = college; // Assuming 'college' is the ID of the associated college
       }
 
       await student.save();
@@ -92,7 +84,7 @@ router
       const result = await Student.deleteOne({ _id: id });
       if (result.deletedCount > 0) {
         res.status(200).send({
-          msg: "Student data deleted succesfully!",
+          msg: "Student data deleted successfully!",
         });
       } else {
         res.status(400).send({

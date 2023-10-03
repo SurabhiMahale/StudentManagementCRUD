@@ -36,5 +36,11 @@ const studentSchema = new mongoose.Schema({
     // required:true,
     
   },
+  //foreign key
+  college: {
+    type: mongoose.Schema.Types.ObjectId, // Reference to the College model
+    ref: 'College', // Name of the referenced model
+    required: true,
+  },
 });
 export default mongoose.model("Student", studentSchema);
